@@ -12,9 +12,12 @@ import { PRESETS } from './config/presets';
 const App = () => {
   const [phase, setPhase] = useState('entry'); // entry, onboarding, game, reflection
   const [currentPreset, setCurrentPreset] = useState(null);
+
+  // Pick a random starting scene for the entry/onboarding phase
+  const initialRandomIndex = Math.floor(Math.random() * PRESETS.length);
   const [backdropState, setBackdropState] = useState({
-    ...PRESETS[0].initialBackdrop,
-    sceneId: PRESETS[0].sceneId
+    ...PRESETS[initialRandomIndex].initialBackdrop,
+    sceneId: PRESETS[initialRandomIndex].sceneId
   });
   const [choicesVisible, setChoicesVisible] = useState(false);
 
@@ -157,6 +160,7 @@ const App = () => {
           onChoice={handleChoice}
           visible={choicesVisible}
           progress={currentProgress}
+          tendencies={stateTracker.state.tendencies}
         />
       )}
 

@@ -172,6 +172,24 @@
   pointer-events: none;
 }
 
+@keyframes pulse-gentle {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+
+  50% {
+    transform: scale(1.02);
+    opacity: 0.25;
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 8s ease-in-out infinite;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

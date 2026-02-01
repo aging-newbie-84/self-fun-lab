@@ -117,6 +117,22 @@ const BackdropRenderer = ({ state }) => {
                 }}
             />
 
+            {/* Character Silhouette Layer */}
+            <div className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10">
+                <div
+                    className="w-[280px] h-[450px] opacity-20 filter blur-[2px] animate-pulse-gentle transition-all duration-1000"
+                    style={{
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                        maskImage: 'radial-gradient(ellipse at bottom, black 40%, transparent 70%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse at bottom, black 40%, transparent 70%)',
+                        transform: state.momentum > state.stillness ? 'scale(1.02)' : 'scale(0.98)',
+                    }}
+                >
+                    {/* Abstract Character Shape */}
+                    <div className="w-full h-full bg-black/60 rounded-t-[140px]" />
+                </div>
+            </div>
+
             {/* 5. Foreground Particles (In front of Scene) */}
             <ParticleLayer
                 count={20}

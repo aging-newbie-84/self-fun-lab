@@ -4,72 +4,67 @@ export const generateReflection = (state) => {
     const { tendencies } = state;
     const statements = [];
 
-    // 1. Analyze Dominant Values
-    const sortedValues = Object.entries(tendencies)
-        .sort(([, a], [, b]) => b - a); // Descending
+    // 1. Map to Relatable Terms
+    const results = {
+        do: tendencies.momentum || 0,
+        think: tendencies.stillness || 0,
+        wide: tendencies.expansion || 0,
+        narrow: tendencies.constraint || 0,
+        clear: tendencies.clarity || 0,
+        mystery: tendencies.ambiguity || 0
+    };
 
-    const topValue = sortedValues[0];
-    const secondValue = sortedValues[1];
+    // Determine Pair Leans
+    const isDo = results.do >= results.think;
+    const isWide = results.wide >= results.narrow;
+    const isMystery = results.mystery >= results.clear;
 
-    const topValueKey = topValue[0];
-    const topValueScore = topValue[1];
-    const secondValueKey = secondValue[0];
+    // 2. Determine Relatable Archetype (Identity)
+    let archetype = "The Navigator";
 
-    // 2. Determine Archetype Name
-    let archetype = "The Balanced";
+    if (isDo && isWide) archetype = "The Explorer";
+    else if (isDo && !isWide) archetype = "The Go-Getter";
+    else if (!isDo && isWide) archetype = "The Observer";
+    else if (!isDo && !isWide) archetype = "The Researcher";
 
-    // Combinations
-    if (topValueKey === 'momentum' && secondValueKey === 'expansion') archetype = "The Vanguard";
-    else if (topValueKey === 'expansion' && secondValueKey === 'momentum') archetype = "The Vanguard";
-
-    else if (topValueKey === 'stillness' && secondValueKey === 'constraint') archetype = "The Anchor";
-    else if (topValueKey === 'constraint' && secondValueKey === 'stillness') archetype = "The Anchor";
-
-    else if (topValueKey === 'clarity' && secondValueKey === 'constraint') archetype = "The Architect";
-    else if (topValueKey === 'constraint' && secondValueKey === 'clarity') archetype = "The Architect";
-
-    else if (topValueKey === 'ambiguity' && secondValueKey === 'expansion') archetype = "The Dreamer";
-    else if (topValueKey === 'expansion' && secondValueKey === 'ambiguity') archetype = "The Dreamer";
-
-    else if (topValueKey === 'momentum' && secondValueKey === 'clarity') archetype = "The Seeker";
-    else if (topValueKey === 'clarity' && secondValueKey === 'momentum') archetype = "The Seeker";
-
-    else if (topValueKey === 'stillness' && secondValueKey === 'ambiguity') archetype = "The Observer";
-    else if (topValueKey === 'ambiguity' && secondValueKey === 'stillness') archetype = "The Observer";
-
-    // Fallbacks based on top value if no combo matches perfectly
-    else {
-        if (topValueKey === 'momentum') archetype = "The Kinetic";
-        if (topValueKey === 'stillness') archetype = "The Silent";
-        if (topValueKey === 'expansion') archetype = "The Voyager";
-        if (topValueKey === 'constraint') archetype = "The Hermit";
-        if (topValueKey === 'clarity') archetype = "The Witness";
-        if (topValueKey === 'ambiguity') archetype = "The Nomad";
-    }
-
-    // 3. Poetic Statements
-    if (topValueKey === 'momentum') statements.push("You chose to move forward again and again.");
-    else if (topValueKey === 'stillness') statements.push("You found strength in pausing and observing.");
-    else if (topValueKey === 'expansion') statements.push("You kept pushing the world's boundaries.");
-    else if (topValueKey === 'constraint') statements.push("You chose depth over distance.");
-    else if (topValueKey === 'clarity') statements.push("You sought answers at every turn.");
-    else if (topValueKey === 'ambiguity') statements.push("You moved freely through the mist.");
-
-    if (tendencies.momentum > 0.6 || tendencies.expansion > 0.6) {
-        statements.push("The world opened up with you, becoming vast and bright.");
-    } else if (tendencies.stillness > 0.6 || tendencies.constraint > 0.6) {
-        statements.push("The world quieted down, becoming intimate and focused.");
-    } else if (tendencies.ambiguity > 0.6) {
-        statements.push("The edges softened, leaving room for mystery.");
+    // 3. Narrative Construction (Based strictly on relatable .md)
+    // Main behavior
+    if (isDo) {
+        statements.push("This session, you chose action over thinking.");
+        statements.push("You went for things—your friends, new places, new ideas.");
+        statements.push("You didn't wait for everything to make sense; you just tried it and saw what happened.");
     } else {
-        statements.push("The world found its center in your presence.");
+        statements.push("This session, you chose understanding over action.");
+        statements.push("You asked questions before jumping in and wanted to know why before you moved forward.");
+        statements.push("You took your time to process things and understand before acting.");
     }
 
-    statements.push("That is real. That is you.");
+    // Value system summary
+    const summary = [];
+    if (isDo) summary.push("says 'let's go' more than 'let me think'");
+    else summary.push("is thoughtful and doesn't rush");
+
+    if (isWide) summary.push("wants to try everything");
+    else summary.push("masters what matters to you");
+
+    statements.push(`You're becoming someone who ${summary[0]} and ${summary[1]}.`);
+
+    // 4. Actionable Advice
+    if (isDo) {
+        statements.push("Next time, try pausing. See what you discover when you think first instead of acting first.");
+    } else {
+        statements.push("Next time, try going for something without understanding first. See what happens when you trust yourself to figure it out.");
+    }
 
     return {
         archetype,
         statements,
-        scores: tendencies
+        scores: {
+            pairs: [
+                { label: 'DO vs THINK', left: results.do, right: results.think },
+                { label: 'WIDE vs NARROW', left: results.wide, right: results.narrow },
+                { label: 'CLEAR vs MYSTERY', left: results.clear, right: results.mystery }
+            ]
+        }
     };
 };

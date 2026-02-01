@@ -6,7 +6,7 @@ class PresetSequencer {
     }
 
     /**
-     * Selects the next preset based on history and tendencies.
+     * Selects the next preset based on history and randomness.
      * @param {Object} history - { presets: ['id1', 'id2'], ... }
      * @param {Object} tendencies - Current player tendencies
      * @returns {Object|null} The next preset object, or null if finished.
@@ -21,15 +21,9 @@ class PresetSequencer {
             return null; // Game over / Reflection time
         }
 
-        // For MVP: Simple order or random?
-        // Brief says: "Select next question based on tendency gaps"
-        // "Avoid repeating same preset immediately"
-
-        // Let's implement a weighted random choice based on "Relevance".
-        // Or just pick the first available for consistency in testing.
-        // Let's pick the first available for now to ensure we see all 5 unique scenes.
-
-        return available[0];
+        // Pick a random preset from the available pool
+        const randomIndex = Math.floor(Math.random() * available.length);
+        return available[randomIndex];
     }
 
     getPresetById(id) {

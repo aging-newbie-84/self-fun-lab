@@ -85,77 +85,133 @@ export const PRESETS = [
     {
         id: "2.5",
         sceneId: "car",
-        question: "Old friends in distant cities reach out. Do you bridge the distance?",
-        initialBackdrop: { skyRatio: 0.7, colorTemperature: 0.4, clarity: 0.7 },
+        sceneId: "living_room",
+        question: "Family function tonight. Your grandfather wants you to come along.",
+        initialBackdrop: { skyRatio: 0.3, colorTemperature: 0.6, clarity: 0.8 },
         choices: [
-            { id: "2.5_a", text: "Make the effort to bridge the distance", response: "You choose expansion across the map. Momentum through effort.", valueImpact: { expansion: 1.4, momentum: 1.3 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.6, clarity: 0.9 } },
-            { id: "2.5_b", text: "Let those friendships fade naturally", response: "The still choice. You accept the shifting landscape of time.", valueImpact: { stillness: 1.4, constraint: 1.2 }, backdropShift: { skyRatio: 0.4, colorTemperature: 0.3, clarity: 1.0 } }
+            { id: "2.1_a", text: "Go with him and meet the family", response: "You're showing up for family. Expanding your circle.", valueImpact: { expansion: 1.3, clarity: 1.1 }, backdropShift: { skyRatio: 0.6, colorTemperature: 0.8 } },
+            { id: "2.1_b", text: "Make an excuse to stay home", response: "You're keeping things simple and sticking to yourself.", valueImpact: { constraint: 1.4, stillness: 1.2 }, backdropShift: { skyRatio: 0.1, colorTemperature: 0.4 } }
         ]
     },
-
-    // --- CATEGORY 3: CHALLENGE / UNCERTAINTY ---
     {
         id: "3.5",
-        sceneId: "bridge",
-        question: "Provocation strikes. Do you fire back or let the heat dissipate?",
-        initialBackdrop: { skyRatio: 0.5, colorTemperature: 0.8, clarity: 0.6, particleSpeed: 'medium' },
+        sceneId: "bedroom",
+        question: "Someone says something rude to you. How do you react?",
+        initialBackdrop: { skyRatio: 0.4, colorTemperature: 0.5, clarity: 0.9 },
         choices: [
-            { id: "3.5_a", text: "Control your reaction and stay respectful", response: "Stillness as power. You hold your ground without a shout.", valueImpact: { stillness: 1.5, clarity: 1.2 }, backdropShift: { skyRatio: 0.6, colorTemperature: 0.5, clarity: 1.0, particleSpeed: 'slow' } },
-            { id: "3.5_b", text: "Let your anger show if someone irritates you", response: "Momentum unleashed. You react with the intensity of the moment.", valueImpact: { momentum: 1.4, ambiguity: 1.1 }, backdropShift: { skyRatio: 0.8, colorTemperature: 1.0, particleSpeed: 'fast' } }
+            { id: "3.5_a", text: "Snap back immediately", response: "You reacted in the moment. Pure momentum.", valueImpact: { momentum: 1.5, ambiguity: 1.2 }, backdropShift: { particleSpeed: 'fast', colorTemperature: 0.8 } },
+            { id: "3.5_b", text: "Stay calm and think before speaking", response: "You chose self-control. Clarity and stillness.", valueImpact: { stillness: 1.6, clarity: 1.4 }, backdropShift: { particleSpeed: 'stagnant', colorTemperature: 0.4 } }
         ]
     },
     {
-        id: "3.8",
-        sceneId: "lane_dusk",
-        question: "A transformation looms. It demands your comfort. Do you trade security for growth?",
-        initialBackdrop: { skyRatio: 0.6, colorTemperature: 0.5, clarity: 0.8 },
+        id: "4.1",
+        sceneId: "temple",
+        question: "You're bored at home alone. What do you do?",
+        initialBackdrop: { skyRatio: 0.4, colorTemperature: 0.7, clarity: 0.8 },
         choices: [
-            { id: "3.8_a", text: "Sacrifice comfort for growth opportunity", response: "Expansion through fire. You step into the unknown.", valueImpact: { expansion: 1.5, momentum: 1.4 }, backdropShift: { skyRatio: 1.0, colorTemperature: 0.9, clarity: 0.4 } },
-            { id: "3.8_b", text: "Maintain your current comfort level", response: "A choice of stillness and safe constraint.", valueImpact: { stillness: 1.3, constraint: 1.4 }, backdropShift: { skyRatio: 0.3, colorTemperature: 0.4, clarity: 1.0 } }
-        ]
-    },
-
-    // --- CATEGORY 5: CONFLICT ---
-    {
-        id: "5.5",
-        sceneId: "living_room",
-        question: "The weight of expectation is heavy. Do you carry it or set it down?",
-        initialBackdrop: { skyRatio: 0.3, colorTemperature: 0.6, clarity: 0.9 },
-        choices: [
-            { id: "5.5_a", text: "Try to meet every family expectation", response: "Constraint as duty. You walk the paved path.", valueImpact: { constraint: 1.4, clarity: 1.3 }, backdropShift: { skyRatio: 0.2, colorTemperature: 0.5, clarity: 1.0 } },
-            { id: "5.5_b", text: "Explain that you won't sacrifice happiness for medals", response: "Expansion through truth. You redefine the rules.", valueImpact: { expansion: 1.5, ambiguity: 1.2 }, backdropShift: { skyRatio: 0.6, colorTemperature: 0.7, clarity: 0.7 } }
+            { id: "4.1_a", text: "Start a creative project or code", response: "You're building something. Expansion through creation.", valueImpact: { expansion: 1.4, momentum: 1.2 }, backdropShift: { skyRatio: 0.7, clarity: 1.0 } },
+            { id: "4.1_b", text: "Just scroll and chill", response: "Accepting the quiet. Sticking with what's easy.", valueImpact: { stillness: 1.3, constraint: 1.5 }, backdropShift: { skyRatio: 0.2, clarity: 0.6 } }
         ]
     },
     {
-        id: "5.8",
-        sceneId: "bridge",
-        question: "A bond is fraying. Do you fight for the thread or let it go?",
-        initialBackdrop: { skyRatio: 0.5, colorTemperature: 0.3, clarity: 0.5, particleDirection: 'down' },
-        choices: [
-            { id: "5.8_a", text: "Fight to save the relationship", response: "Momentum in love. You refuse to let the fire die.", valueImpact: { momentum: 1.4, expansion: 1.2 }, backdropShift: { skyRatio: 0.7, colorTemperature: 0.6, clarity: 0.8 } },
-            { id: "5.8_b", text: "Accept that it's over and move on", response: "The still finality. You walk into the next chapter alone.", valueImpact: { stillness: 1.5, clarity: 1.4 }, backdropShift: { skyRatio: 0.2, colorTemperature: 0.2, clarity: 1.0 } }
-        ]
-    },
-
-    // --- CATEGORY 6: IDENTITY ---
-    {
-        id: "6.2",
+        id: "5.1",
         sceneId: "rooftop",
-        question: "The crowd believes one thing. You believe another. Do you speak?",
-        initialBackdrop: { skyRatio: 0.6, colorTemperature: 0.5, clarity: 0.7 },
+        question: "Your friends went to a movie without calling you. What now?",
+        initialBackdrop: { skyRatio: 0.6, colorTemperature: 0.4, clarity: 0.7 },
         choices: [
-            { id: "6.2_a", text: "Be vocal about what you actually believe", response: "Clarity of self. You stand apart from the noise.", valueImpact: { clarity: 1.5, momentum: 1.2 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.7, clarity: 1.0 } },
-            { id: "6.2_b", text: "Keep your real opinions to yourself", response: "Ambiguity as armor. You observe from the shadows.", valueImpact: { ambiguity: 1.4, stillness: 1.2 }, backdropShift: { skyRatio: 0.4, colorTemperature: 0.4, clarity: 0.6 } }
+            { id: "5.1_a", text: "Ask them why you were excluded", response: "You're confronting the issue. Seeking clarity.", valueImpact: { momentum: 1.3, clarity: 1.5 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.6 } },
+            { id: "5.1_b", text: "Pretend it's fine and say nothing", response: "Keeping the peace internally. Still and ambiguous.", valueImpact: { stillness: 1.4, ambiguity: 1.4 }, backdropShift: { skyRatio: 0.3, colorTemperature: 0.3 } }
         ]
     },
     {
         id: "6.7",
         sceneId: "lane_golden",
-        question: "Final crossroads. Which version of 'You' remains?",
+        question: "Last choice. Which version of you are you showing the world today?",
         initialBackdrop: { skyRatio: 0.5, colorTemperature: 0.6, clarity: 0.8 },
         choices: [
-            { id: "6.7_a", text: "Be yourself, not a copy of your peers", response: "Authentic expansion. You are the original of yourself.", valueImpact: { expansion: 1.6, clarity: 1.5 }, backdropShift: { skyRatio: 0.9, colorTemperature: 0.9, clarity: 1.0 } },
-            { id: "6.7_b", text: "Be the athlete they expect - the safe role", response: "Comfortable constraint. You fulfill the image they love.", valueImpact: { constraint: 1.5, stillness: 1.3 }, backdropShift: { skyRatio: 0.3, colorTemperature: 0.4, clarity: 0.9 } }
+            { id: "6.7_a", text: "Be yourself, even if it's different", response: "Authentic and bold. You're expanding as yourself.", valueImpact: { expansion: 1.6, clarity: 1.5 }, backdropShift: { skyRatio: 0.9, colorTemperature: 0.9, clarity: 1.0 } },
+            { id: "6.7_b", text: "Be the athlete they expect - the safe role", response: "Meeting expectations. Sticking to the plan.", valueImpact: { constraint: 1.5, stillness: 1.3 }, backdropShift: { skyRatio: 0.3, colorTemperature: 0.4, clarity: 0.9 } }
+        ]
+    },
+    // --- ADDITIONAL DIVERSE SCENARIOS ---
+    {
+        id: "1.4",
+        sceneId: "bedroom",
+        question: "Homework is piling up, but friends are calling. What's the priority?",
+        initialBackdrop: { skyRatio: 0.3, colorTemperature: 0.4, clarity: 1.0 },
+        choices: [
+            { id: "1.4_a", text: "Finish homework first", response: "Responsibilities first. You chose focus and constraint.", valueImpact: { constraint: 1.4, clarity: 1.3 }, backdropShift: { skyRatio: 0.2, colorTemperature: 0.5 } },
+            { id: "1.4_b", text: "Meet friends now, work later", response: "Going for the fun. Momentum over structure.", valueImpact: { momentum: 1.4, expansion: 1.2 }, backdropShift: { skyRatio: 0.6, colorTemperature: 0.7 } }
+        ]
+    },
+    {
+        id: "2.5",
+        sceneId: "lane",
+        question: "A friend you haven't seen in months wants to catch up. Do you make the effort?",
+        initialBackdrop: { skyRatio: 0.6, colorTemperature: 0.5, clarity: 0.7 },
+        choices: [
+            { id: "2.5_a", text: "Plan a big meetup to reconnect", response: "Bridges built. You're expanding your social world.", valueImpact: { expansion: 1.5, momentum: 1.3 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.6 } },
+            { id: "2.5_b", text: "Let it fade naturally", response: "Accepting life as it is. Still and focused on the present.", valueImpact: { stillness: 1.4, constraint: 1.3 }, backdropShift: { skyRatio: 0.3, colorTemperature: 0.3 } }
+        ]
+    },
+    {
+        id: "3.2",
+        sceneId: "temple",
+        question: "There's a volunteer event at a local shelter. Do you go?",
+        initialBackdrop: { skyRatio: 0.4, colorTemperature: 0.6, clarity: 0.8 },
+        choices: [
+            { id: "3.2_a", text: "Go and spend time helping out", response: "Stepping out of your bubble. High expansion and momentum.", valueImpact: { expansion: 1.5, momentum: 1.4 }, backdropShift: { skyRatio: 0.7, colorTemperature: 0.8 } },
+            { id: "3.2_b", text: "Stay home where it's comfortable", response: "Sticking to your safe space. Deep stillness.", valueImpact: { stillness: 1.5, constraint: 1.4 }, backdropShift: { skyRatio: 0.2, colorTemperature: 0.4 } }
+        ]
+    },
+    {
+        id: "3.4",
+        sceneId: "bedroom",
+        question: "You're trying to fix your sleep schedule. It's late. What do you do?",
+        initialBackdrop: { skyRatio: 0.2, colorTemperature: 0.3, clarity: 1.0 },
+        choices: [
+            { id: "3.4_a", text: "Force yourself to go to bed now", response: "Self-discipline in action. Constraint and clarity.", valueImpact: { constraint: 1.5, clarity: 1.4 }, backdropShift: { skyRatio: 0.1, colorTemperature: 0.2 } },
+            { id: "3.4_b", text: "Stay up and finish your video", response: "Following the moment. Mystery and momentum.", valueImpact: { momentum: 1.3, mystery: 1.2 }, backdropShift: { skyRatio: 0.4, colorTemperature: 0.4 } }
+        ]
+    },
+    {
+        id: "4.2",
+        sceneId: "living_room",
+        question: "You're stuck on a difficult task. How do you find the answer?",
+        initialBackdrop: { skyRatio: 0.4, colorTemperature: 0.5, clarity: 0.6 },
+        choices: [
+            { id: "4.2_a", text: "Ask someone for help immediately", response: "Collaborating to solve it. Expansion and momentum.", valueImpact: { expansion: 1.3, momentum: 1.2 }, backdropShift: { skyRatio: 0.6, clarity: 0.9 } },
+            { id: "4.2_b", text: "Struggle through it alone", response: "Finding your own way. Stillness and focus.", valueImpact: { stillness: 1.4, constraint: 1.5 }, backdropShift: { skyRatio: 0.2, clarity: 0.4 } }
+        ]
+    },
+    {
+        id: "5.5",
+        sceneId: "school_bus",
+        question: "Family is pushing you to be the best at sports. How do you feel?",
+        initialBackdrop: { skyRatio: 0.5, colorTemperature: 0.5, clarity: 0.8 },
+        choices: [
+            { id: "5.5_a", text: "Try your hardest to meet their goals", response: "Chasing the objective. Momentum and constraint.", valueImpact: { momentum: 1.4, constraint: 1.3 }, backdropShift: { skyRatio: 0.4, colorTemperature: 0.7 } },
+            { id: "5.5_b", text: "Tell them you just want to be happy", response: "Choosing your own path. Expansion and mystery.", valueImpact: { expansion: 1.5, mystery: 1.4 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.5 } }
+        ]
+    },
+    {
+        id: "5.8",
+        sceneId: "rooftop",
+        question: "A close relationship is ending. How do you handle it?",
+        initialBackdrop: { skyRatio: 0.6, colorTemperature: 0.3, clarity: 0.5 },
+        choices: [
+            { id: "5.8_a", text: "Fight to save the relationship", response: "Putting in the work. High momentum.", valueImpact: { momentum: 1.6, expansion: 1.2 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.6 } },
+            { id: "5.8_b", text: "Accept it and move on", response: "Letting go. Stillness and closure.", valueImpact: { stillness: 1.5, clarity: 1.4 }, backdropShift: { skyRatio: 0.2, colorTemperature: 0.2 } }
+        ]
+    },
+    {
+        id: "6.3",
+        sceneId: "lane",
+        question: "You have a hobby some people find weird. Do you talk about it?",
+        initialBackdrop: { skyRatio: 0.5, colorTemperature: 0.6, clarity: 0.7 },
+        choices: [
+            { id: "6.3_a", text: "Talk openly about what you love", response: "Owning your identity. Expansion and clarity.", valueImpact: { expansion: 1.4, clarity: 1.5 }, backdropShift: { skyRatio: 0.8, colorTemperature: 0.8 } },
+            { id: "6.3_b", text: "Keep it to yourself", response: "A private passion. Constraint and mystery.", valueImpact: { constraint: 1.5, mystery: 1.4 }, backdropShift: { skyRatio: 0.3, colorTemperature: 0.4 } }
         ]
     }
 ];

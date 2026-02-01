@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { generateReflection } from '../engines/ReflectionGenerator';
 import stateTracker from '../engines/StateTracker';
+import { supabase } from '../lib/supabaseClient';
 import clsx from 'clsx';
 
 const ValueBar = ({ label, value, delay = 0 }) => (
@@ -24,13 +25,40 @@ const ValueBar = ({ label, value, delay = 0 }) => (
 const ReflectionScreen = ({ onRestart }) => {
     const [data, setData] = useState(null);
     const [showContent, setShowContent] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         const result = generateReflection(stateTracker.state);
         setData(result);
+
+        // Trigger save to Supabase
+        saveReflection(result);
+
         const timer = setTimeout(() => setShowContent(true), 500);
         return () => clearTimeout(timer);
     }, []);
+
+    const saveReflection = async (reflectionData) => {
+        try {
+            setIsSaving(true);
+            const { error } = await supabase
+                .from('reflections')
+                .insert([
+                    {
+                        archetype: reflectionData.archetype,
+                        statements: reflectionData.statements,
+                        scores: reflectionData.scores,
+                        created_at: new Date().toISOString()
+                    }
+                ]);
+
+            if (error) console.error('Error saving reflection:', error);
+        } catch (err) {
+            console.error('Save failed:', err);
+        } finally {
+            setIsSaving(false);
+        }
+    };
 
     if (!data) return null;
 
@@ -102,7 +130,7 @@ const ReflectionScreen = ({ onRestart }) => {
                                     Begin Anew
                                 </button>
                                 <p className="mt-6 text-center text-white/10 text-[9px] tracking-[.4em] uppercase font-display">
-                                    Quiet Forks • Experience v1.0
+                                    Quiet Forks • Experience v1.0 • {isSaving ? "Syncing..." : "Saved"}
                                 </p>
                             </footer>
                         </div>

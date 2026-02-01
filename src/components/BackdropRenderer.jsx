@@ -19,9 +19,10 @@ const ParticleLayer = ({ speed, direction, count, size, opacity, color, depth })
     const speedMap = { slow: 30, medium: 15, fast: 8, still: 999 };
     const baseDuration = speedMap[speed] || 15;
     const dirClass = `particle-move-${direction || 'none'}`;
+    const zIndex = depth === 'front' ? 'z-[25]' : depth === 'mid' ? 'z-[15]' : 'z-5';
 
     return (
-        <div className={clsx("absolute inset-0 overflow-hidden pointer-events-none", depth === 'front' ? 'z-20' : 'z-5')}>
+        <div className={clsx("absolute inset-0 overflow-hidden pointer-events-none", zIndex)}>
             {particles.map(p => (
                 <div
                     key={p.id}
@@ -97,11 +98,11 @@ const BackdropRenderer = ({ state }) => {
                 </div>
             </div>
 
-            {/* 3. Deep Particles (Behind Scene) */}
+            {/* 3. Deep Background Particles */}
             <ParticleLayer
-                count={15}
-                size="6px"
-                opacity={0.3}
+                count={50}
+                size="4px"
+                opacity={0.2}
                 color={theme.accent}
                 speed="slow"
                 direction={particleDirection}
@@ -133,11 +134,22 @@ const BackdropRenderer = ({ state }) => {
                 </div>
             </div>
 
-            {/* 5. Foreground Particles (In front of Scene) */}
+            {/* 5. Midground Particles (Behind Silo, in front of Scene) */}
             <ParticleLayer
-                count={20}
+                count={40}
+                size="2px"
+                opacity={0.4}
+                color="#FFFFFF"
+                speed="medium"
+                direction={particleDirection}
+                depth="mid"
+            />
+
+            {/* 6. Foreground "Vibe" Particles (In front of everything) */}
+            <ParticleLayer
+                count={80}
                 size="3px"
-                opacity={0.6}
+                opacity={0.7}
                 color="#FFFFFF"
                 speed={particleSpeed}
                 direction={particleDirection}

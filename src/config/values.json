@@ -1,0 +1,8 @@
+[
+  { "id": "momentum", "label": "Momentum", "opposite": "stillness", "description": "Action, movement, and pushing forward." },
+  { "id": "stillness", "label": "Stillness", "opposite": "momentum", "description": "Pause, reflection, and observation." },
+  { "id": "expansion", "label": "Expansion", "opposite": "constraint", "description": "Opening up, exploring, and broadening horizons." },
+  { "id": "constraint", "label": "Constraint", "opposite": "expansion", "description": "Focusing, deepening, and committing." },
+  { "id": "clarity", "label": "Clarity", "opposite": "ambiguity", "description": "Understanding, certainty, and directness." },
+  { "id": "ambiguity", "label": "Ambiguity", "opposite": "clarity", "description": "Mystery, unknowns, and embracing confusion." }
+]

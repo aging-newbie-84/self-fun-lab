@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { SCENE_MAP } from '../scenes/SceneLibrary';
+import ArchetypeTotem from './ArchetypeTotem';
 import clsx from 'clsx';
 
 // Enhanced Particle component with depth and organic feel
@@ -135,7 +136,6 @@ const BackdropRenderer = ({ state }) => {
             {/* Living World: Window Life (Urban background) */}
             {isUrban && (
                 <div className="absolute inset-0 pointer-events-none z-[3] mix-blend-screen opacity-40">
-                    {/* Simulated distant window flickers */}
                     <div className="absolute top-[40%] right-[20%] w-1 h-1 bg-yellow-200 animate-window" />
                     <div className="absolute top-[45%] left-[30%] w-2 h-1 bg-yellow-100 animate-window" style={{ animationDelay: '-3s' }} />
                 </div>
@@ -197,11 +197,11 @@ const BackdropRenderer = ({ state }) => {
                 }}
             />
 
-            {/* Character Silhouette Layer */}
+            {/* Character Silhouette Layer + Totem Heartbeat */}
             <div className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10">
                 <div
                     className={clsx(
-                        "w-[280px] h-[450px] opacity-20 filter blur-[2px] transition-all duration-1000",
+                        "relative w-[280px] h-[450px] opacity-20 filter blur-[2px] transition-all duration-1000",
                         tendencies.momentum > 0.6 ? "animate-pulse" : "animate-pulse-gentle"
                     )}
                     style={{
@@ -211,6 +211,11 @@ const BackdropRenderer = ({ state }) => {
                     }}
                 >
                     <div className="w-full h-full bg-black/60 rounded-t-[140px]" />
+
+                    {/* The Archetype Totem (Player's heart) */}
+                    <div className="absolute top-[120px] left-1/2 -translate-x-1/2 z-20 opacity-80 scale-150">
+                        <ArchetypeTotem tendencies={tendencies} size={40} />
+                    </div>
                 </div>
             </div>
 

@@ -605,3 +605,256 @@
 .animate-shadow {
   animation: shadow-shift 12s ease-in-out infinite;
 }
+
+/* --- Archetype Totems: Animation Heartbeats --- */
+
+/* THE DOER (Spin) */
+@keyframes totem-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.totem-spin.intense {
+  animation: totem-spin 3s linear infinite;
+  opacity: 1;
+}
+
+.totem-spin.strong {
+  animation: totem-spin 4s linear infinite;
+  opacity: 0.85;
+}
+
+.totem-spin.moderate {
+  animation: totem-spin 4.5s linear infinite;
+  opacity: 0.75;
+}
+
+.totem-spin.subtle {
+  animation: totem-spin 5s linear infinite;
+  opacity: 0.7;
+}
+
+.totem-spin.very-subtle {
+  animation: totem-spin 6s linear infinite;
+  opacity: 0.5;
+}
+
+/* THE THINKER (Sway) */
+@keyframes totem-sway {
+
+  0%,
+  100% {
+    transform: rotate(-15deg);
+  }
+
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+.totem-sway.intense {
+  animation: totem-sway 2.5s ease-in-out infinite;
+  opacity: 1;
+}
+
+.totem-sway.strong {
+  animation: totem-sway 3s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+.totem-sway.moderate {
+  animation: totem-sway 3.5s ease-in-out infinite;
+  opacity: 0.75;
+}
+
+.totem-sway.subtle {
+  animation: totem-sway 4s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.totem-sway.very-subtle {
+  animation: totem-sway 5s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+/* THE EXPLORER (Rotate/Compass) */
+@keyframes totem-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(90deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(270deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.totem-rotate.intense {
+  animation: totem-rotate 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  opacity: 1;
+}
+
+.totem-rotate.strong {
+  animation: totem-rotate 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  opacity: 0.85;
+}
+
+.totem-rotate.moderate {
+  animation: totem-rotate 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  opacity: 0.75;
+}
+
+.totem-rotate.subtle {
+  animation: totem-rotate 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  opacity: 0.7;
+}
+
+.totem-rotate.very-subtle {
+  animation: totem-rotate 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  opacity: 0.5;
+}
+
+/* THE KEEPER (Pulse/Growth) */
+@keyframes totem-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+}
+
+.totem-pulse.intense {
+  animation: totem-pulse 2.5s ease-in-out infinite;
+  opacity: 1;
+}
+
+.totem-pulse.strong {
+  animation: totem-pulse 3s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+.totem-pulse.moderate {
+  animation: totem-pulse 3.5s ease-in-out infinite;
+  opacity: 0.75;
+}
+
+.totem-pulse.subtle {
+  animation: totem-pulse 4s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.totem-pulse.very-subtle {
+  animation: totem-pulse 5s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+/* THE QUESTIONER (Glow) */
+@keyframes totem-glow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px currentColor);
+    opacity: 0.6;
+  }
+
+  50% {
+    filter: drop-shadow(0 0 20px currentColor);
+    opacity: 1;
+  }
+}
+
+.totem-glow.intense {
+  animation: totem-glow 2s ease-in-out infinite;
+}
+
+.totem-glow.strong {
+  animation: totem-glow 2.5s ease-in-out infinite;
+}
+
+.totem-glow.moderate {
+  animation: totem-glow 3s ease-in-out infinite;
+}
+
+.totem-glow.subtle {
+  animation: totem-glow 3.5s ease-in-out infinite;
+}
+
+.totem-glow.very-subtle {
+  animation: totem-glow 4s ease-in-out infinite;
+}
+
+/* THE MYSTERY-KEEPER (Fade/Ghost) */
+@keyframes totem-fade {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    filter: blur(2px);
+  }
+
+  50% {
+    opacity: 0.8;
+    filter: blur(0px);
+  }
+}
+
+.totem-fade.intense {
+  animation: totem-fade 3s ease-in-out infinite;
+}
+
+.totem-fade.strong {
+  animation: totem-fade 3.5s ease-in-out infinite;
+}
+
+.totem-fade.moderate {
+  animation: totem-fade 4s ease-in-out infinite;
+}
+
+.totem-fade.subtle {
+  animation: totem-fade 4.5s ease-in-out infinite;
+}
+
+.totem-fade.very-subtle {
+  animation: totem-fade 5s ease-in-out infinite;
+}
+
+/* THE CENTER (Balanced Breathe) */
+@keyframes totem-breathe {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05) rotate(180deg);
+  }
+}
+
+.totem-breathe {
+  animation: totem-breathe 10s ease-in-out infinite;
+}

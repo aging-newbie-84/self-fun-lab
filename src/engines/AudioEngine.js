@@ -1,7 +1,7 @@
-import ostV1 from '../assets/ost.mp3';
-import ostV12 from '../assets/ost_v1.2.mp3';
-import ostV13 from '../assets/ost_v1.3.mp3';
-import ostV14 from '../assets/ost_v1.4.mp3';
+import ostV1 from '../assets/Quiet Forks v1.0 OST.mp3';
+import ostV12 from '../assets/Quiet Forks v1.2 OST.mp3';
+import ostV13 from '../assets/Quiet Forks v1.3 OST.mp3';
+import ostV14 from '../assets/Quiet Forks v1.4 OST.mp3';
 
 class AudioEngine {
     constructor() {
@@ -12,8 +12,24 @@ class AudioEngine {
             'v1.4': ostV14  // Climax / Choice
         };
         this.audios = {};
-        this.currentTrack = null;
         this.initialized = false;
+        this.muted = false;
+        this.targetVolume = 0.4;
+    }
+
+    setMuted(m) {
+        this.muted = m;
+        const vol = m ? 0 : this.targetVolume;
+        Object.values(this.audios).forEach(audio => {
+            if (audio === this.audios[this.currentTrack]) {
+                audio.volume = vol;
+            }
+        });
+    }
+
+    toggleMute() {
+        this.setMuted(!this.muted);
+        return this.muted;
     }
 
     async init() {
@@ -39,7 +55,7 @@ class AudioEngine {
 
         this.currentTrack = track;
         audio.play().then(() => {
-            this.fadeIn(audio, 0.4, 2000);
+            this.fadeIn(audio, this.muted ? 0 : this.targetVolume, 2000);
         }).catch(e => console.warn("Audio play blocked", e));
     }
 
@@ -55,7 +71,7 @@ class AudioEngine {
         newAudio.currentTime = oldAudio ? oldAudio.currentTime : 0;
         newAudio.play().then(() => {
             if (oldAudio) this.fadeOut(oldAudio, 0, 3000);
-            this.fadeIn(newAudio, 0.4, 3000);
+            this.fadeIn(newAudio, this.muted ? 0 : this.targetVolume, 3000);
             this.currentTrack = newTrack;
         });
     }

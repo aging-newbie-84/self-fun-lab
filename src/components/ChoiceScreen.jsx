@@ -37,47 +37,7 @@ const ChoiceCard = ({ choice, onClick, disabled, delay = 0 }) => {
     );
 };
 
-const ValueDot = ({ active, color }) => (
-    <div
-        className={clsx(
-            "w-[6px] h-[6px] rounded-full transition-all duration-700",
-            active ? color : "bg-white/10"
-        )}
-    />
-);
-
-const ValueTrackerHUD = ({ tendencies, visible }) => {
-    // Map existing tendencies to the new labels
-    const values = [
-        { label: 'DO', level: tendencies.momentum || 0, color: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' },
-        { label: 'WIDE', level: tendencies.expansion || 0, color: 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]' },
-        { label: 'CLEAR', level: tendencies.clarity || 0, color: 'bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.6)]' }
-    ];
-
-    return (
-        <div className={clsx(
-            "fixed bottom-8 right-8 z-50 flex flex-col gap-4 p-5 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/5 transition-all duration-1000",
-            visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
-        )}>
-            <span className="text-[9px] text-white/30 tracking-[0.3em] uppercase font-display mb-1">Current Path</span>
-            {values.map(v => (
-                <div key={v.label} className="flex items-center justify-between gap-6">
-                    <span className="text-[10px] text-white/60 tracking-widest font-display min-w-[40px]">{v.label}</span>
-                    <div className="flex gap-1.5">
-                        {[1, 2, 3, 4, 5].map(dot => {
-                            // Scale tendency (usually 0.5-2.0) to 1-5 dots
-                            // Minimum 1 dot for 1.0 tendency, etc.
-                            const active = v.level >= (dot * 0.4);
-                            return <ValueDot key={dot} active={active} color={v.color} />;
-                        })}
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-};
-
-const ChoiceScreen = ({ preset, onChoice, visible, progress = 0, tendencies = {} }) => {
+const ChoiceScreen = ({ preset, onChoice, visible, progress = 0 }) => {
     const [selectedId, setSelectedId] = useState(null);
 
     // Reset selection when preset changes
@@ -96,75 +56,70 @@ const ChoiceScreen = ({ preset, onChoice, visible, progress = 0, tendencies = {}
     const screenVisibilityClass = visible ? "opacity-100" : "opacity-0 scale-105 pointer-events-none";
 
     return (
-        <>
+        <div className={clsx(
+            "absolute inset-0 z-20 flex flex-col transition-all duration-[1200ms] cubic-bezier(0.23, 1, 0.32, 1)",
+            screenVisibilityClass
+        )}>
+            {/* Top: Progress Bar & Question Area */}
             <div className={clsx(
-                "absolute inset-0 z-20 flex flex-col transition-all duration-[1200ms] cubic-bezier(0.23, 1, 0.32, 1)",
-                screenVisibilityClass
+                "w-full pt-12 md:pt-16 pb-16 md:pb-20 px-6 md:px-8 pt-safe transition-all duration-1000 bg-gradient-to-b from-black/80 via-black/40 to-transparent",
+                !selectedId ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-20 scale-95"
             )}>
-                {/* Top: Progress Bar & Question Area */}
-                <div className={clsx(
-                    "w-full pt-16 pb-20 px-8 transition-all duration-1000 bg-gradient-to-b from-black/80 via-black/40 to-transparent",
-                    !selectedId ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-20 scale-95"
-                )}>
-                    {/* Progress Indicator */}
-                    <div className="max-w-md mx-auto mb-16 flex flex-col items-center gap-2">
-                        <div className="flex justify-between w-full px-1 mb-2">
-                            <span className="text-[10px] text-white/30 tracking-[0.4em] uppercase font-display">Journey</span>
-                            <span className="text-[10px] text-white/30 tracking-[0.4em] uppercase font-display">{Math.round(progress)}%</span>
-                        </div>
-                        <div className="w-full h-[2px] bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/5">
-                            <div
-                                className="h-full bg-white transition-all duration-1000 ease-out animate-shimmer"
-                                style={{ width: `${progress}%` }}
-                            />
-                        </div>
+                {/* Progress Indicator */}
+                <div className="max-w-md mx-auto mb-16 flex flex-col items-center gap-2">
+                    <div className="flex justify-between w-full px-1 mb-2">
+                        <span className="text-[10px] text-white/30 tracking-[0.4em] uppercase font-display">Journey</span>
+                        <span className="text-[10px] text-white/30 tracking-[0.4em] uppercase font-display">{Math.round(progress)}%</span>
                     </div>
-
-                    <h2 className="font-display text-3xl md:text-5xl lg:text-6xl text-white text-center drop-shadow-[0_8px_24px_rgba(0,0,0,0.8)] leading-[1.3] max-w-5xl mx-auto tracking-tight">
-                        {preset.question}
-                    </h2>
-                </div>
-
-                {/* Bottom: Choices/Response Area */}
-                <div className="mt-auto w-full pb-32 px-6 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-auto">
-                    <div className="flex flex-col gap-6 max-w-2xl mx-auto transition-all duration-1000">
-                        {selectedId ? (
-                            <div className="text-center p-12 flex flex-col items-center justify-center min-h-[250px] gap-8 animate-fade-in">
-                                <p className="font-display text-3xl md:text-5xl text-white drop-shadow-xl leading-snug tracking-heading">
-                                    {preset.choices.find(c => c.id === selectedId)?.response}
-                                </p>
-
-                                <div className="flex flex-wrap justify-center gap-4">
-                                    {Object.entries(preset.choices.find(c => c.id === selectedId)?.valueImpact || {}).map(([trait, value], i) => (
-                                        <span
-                                            key={trait}
-                                            className="px-6 py-2 bg-white/5 border border-white/10 text-white/70 rounded-full text-[10px] tracking-[0.3em] uppercase animate-score-pop backdrop-blur-md"
-                                            style={{ animationDelay: `${0.3 + i * 0.1}s` }}
-                                        >
-                                            {trait}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="space-y-4">
-                                {preset.choices.map((choice, idx) => (
-                                    <ChoiceCard
-                                        key={choice.id}
-                                        choice={choice}
-                                        onClick={() => handleChoice(choice.id)}
-                                        delay={0.5 + idx * 0.2}
-                                    />
-                                ))}
-                            </div>
-                        )}
+                    <div className="w-full h-[2px] bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/5">
+                        <div
+                            className="h-full bg-white transition-all duration-1000 ease-out animate-shimmer"
+                            style={{ width: `${progress}%` }}
+                        />
                     </div>
                 </div>
+
+                <h2 className="font-display text-2xl md:text-5xl lg:text-6xl text-white text-center drop-shadow-[0_8px_24px_rgba(0,0,0,0.8)] leading-[1.3] max-w-5xl mx-auto tracking-tight px-4">
+                    {preset.question}
+                </h2>
             </div>
 
-            {/* Real-time HUD Layer */}
-            <ValueTrackerHUD tendencies={tendencies} visible={visible} />
-        </>
+            {/* Bottom: Choices/Response Area */}
+            <div className="mt-auto w-full pb-24 md:pb-32 pb-safe px-6 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-auto">
+                <div className="flex flex-col gap-4 md:gap-6 max-w-2xl mx-auto transition-all duration-1000">
+                    {selectedId ? (
+                        <div className="text-center p-6 md:p-12 flex flex-col items-center justify-center min-h-[200px] md:min-h-[250px] gap-6 md:gap-8 animate-fade-in">
+                            <p className="font-display text-2xl md:text-5xl text-white drop-shadow-xl leading-snug tracking-heading">
+                                {preset.choices.find(c => c.id === selectedId)?.response}
+                            </p>
+
+                            <div className="flex flex-wrap justify-center gap-4">
+                                {Object.entries(preset.choices.find(c => c.id === selectedId)?.valueImpact || {}).map(([trait, value], i) => (
+                                    <span
+                                        key={trait}
+                                        className="px-6 py-2 bg-white/5 border border-white/10 text-white/70 rounded-full text-[10px] tracking-[0.3em] uppercase animate-score-pop backdrop-blur-md"
+                                        style={{ animationDelay: `${0.3 + i * 0.1}s` }}
+                                    >
+                                        {trait}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {preset.choices.map((choice, idx) => (
+                                <ChoiceCard
+                                    key={choice.id}
+                                    choice={choice}
+                                    onClick={() => handleChoice(choice.id)}
+                                    delay={0.5 + idx * 0.2}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 };
 

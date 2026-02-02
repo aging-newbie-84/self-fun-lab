@@ -93,7 +93,7 @@ const OnboardingScreen = ({ onComplete }) => {
 
     return (
         <div className={clsx(
-            "absolute inset-0 z-40 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center px-6 transition-all duration-[1500ms] cubic-bezier(0.23, 1, 0.32, 1)",
+            "absolute inset-0 z-40 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center px-6 pt-safe pb-safe transition-all duration-[1500ms] cubic-bezier(0.23, 1, 0.32, 1)",
             isVisible ? "opacity-100" : "opacity-0"
         )}>
             {/* Cinematic Grain Overlays */}

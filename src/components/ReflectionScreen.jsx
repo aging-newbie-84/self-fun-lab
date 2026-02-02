@@ -88,7 +88,16 @@ const ReflectionScreen = ({ onRestart }) => {
     const { archetype, statements, scores } = data;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black">
+        <div className={clsx(
+            "fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 pt-safe pb-safe bg-black overflow-y-auto",
+            (() => {
+                const tendencies = stateTracker.getTendencies();
+                const maxVal = Math.max(...Object.values(tendencies));
+                if (maxVal > 0.75) return "intensity-high";
+                if (maxVal > 0.45) return "intensity-medium";
+                return "intensity-subtle";
+            })()
+        )}>
             <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
             <div className="absolute inset-0 cinematic-vignette opacity-80 pointer-events-none" />
 
@@ -98,19 +107,19 @@ const ReflectionScreen = ({ onRestart }) => {
             </div>
 
             <div className={clsx(
-                "relative z-10 w-full max-w-5xl transition-all duration-[1500ms] cubic-bezier(0.23, 1, 0.32, 1)",
+                "relative z-10 w-full max-w-5xl transition-all duration-[1500ms] cubic-bezier(0.23, 1, 0.32, 1) my-auto",
                 showContent ? "opacity-100 scale-100" : "opacity-0 scale-[0.98]"
             )}>
-                <div className="glass-panel rounded-[2.5rem] p-10 md:p-16 overflow-hidden relative border border-white/10">
+                <div className="glass-panel rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-16 overflow-hidden relative border border-white/10">
                     <div className="absolute -top-12 -right-12 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
 
-                    <div className="grid lg:grid-cols-[1.4fr,1fr] gap-16 items-start">
+                    <div className="grid lg:grid-cols-[1.4fr,1fr] gap-10 md:gap-16 items-start">
                         <div className="space-y-12">
                             <header>
-                                <p className="font-display text-white/50 tracking-[.2em] italic text-2xl mb-2 animate-fade-in" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
+                                <p className="font-display text-white/50 tracking-[.2em] italic text-xl md:text-2xl mb-2 animate-fade-in" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
                                     This time, you became...
                                 </p>
-                                <h1 className="font-display text-6xl md:text-8xl text-white tracking-tighter leading-none animate-fade-in" style={{ animationDelay: '0.8s', animationFillMode: 'both' }}>
+                                <h1 className="font-display text-5xl md:text-8xl text-white tracking-tighter leading-none animate-fade-in" style={{ animationDelay: '0.8s', animationFillMode: 'both' }}>
                                     {archetype}
                                 </h1>
                             </header>
@@ -128,9 +137,9 @@ const ReflectionScreen = ({ onRestart }) => {
                             </div>
                         </div>
 
-                        <div className="flex flex-col h-full bg-white/5 p-8 rounded-3xl border border-white/5">
+                        <div className="flex flex-col h-full bg-white/5 p-6 md:p-8 rounded-3xl border border-white/5">
                             <div className="flex-grow">
-                                <h3 className="font-display text-white/20 tracking-[.3em] uppercase text-[10px] mb-12">Your Choosing Style</h3>
+                                <h3 className="font-display text-white/20 tracking-[.3em] uppercase text-[10px] mb-8 md:mb-12">Your Choosing Style</h3>
                                 <div className="space-y-2">
                                     {scores.pairs.map((pair, i) => (
                                         <ValuePair

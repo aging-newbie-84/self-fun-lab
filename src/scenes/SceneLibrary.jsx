@@ -1,15 +1,18 @@
 import React from 'react';
 import backdropMain from '../assets/backdrop_main.png';
-import bridgeImg from '../assets/bridge_new.png';
-import rooftopImg from '../assets/rooftop_new.png';
-import schoolBusImg from '../assets/school_bus_new.png';
-import laneGolden from '../assets/lane_golden.png';
-import templeImg from '../assets/temple_new.png';
-import badmintonImg from '../assets/badminton_new.png';
-import badmintonEmptyImg from '../assets/badminton_empty.png';
-import laneNewImg from '../assets/lane_new.png';
-import laneDuskImg from '../assets/lane_dusk.png';
-import carImg from '../assets/car.png';
+import bridgeImg from '../assets/Bridge.png';
+import rooftopImg from '../assets/Rooftop.png';
+import schoolBusImg from '../assets/School Lane & Sports.png';
+import laneGolden from '../assets/Lane 2.png';
+import templeImg from '../assets/Golden Light J Temple.png';
+import badmintonImg from '../assets/Indoor Badminton Court.png';
+import badmintonEmptyImg from '../assets/Badminton Court Empty.png';
+import laneNewImg from '../assets/Lane 2.png';
+import laneDuskImg from '../assets/Twilight in a BBSR Lane.png';
+import carImg from '../assets/Car.png';
+import fieldImg from '../assets/Serene Grass Field in hot Sun.png';
+import rooftopGolden from '../assets/Golden Hour Rooftop.png';
+import rooftopTwilight from '../assets/Twilight Rooftop with hanging laundry.png';
 
 const ImageScene = ({ src, alt }) => (
     <div className="w-full h-full flex items-center justify-center bg-black">
@@ -24,7 +27,7 @@ export const SCENE_MAP = {
     lane: () => <ImageScene src={laneNewImg} alt="Lane" />,
     lane_golden: () => <ImageScene src={laneGolden} alt="Lane Golden Hour" />,
     lane_dusk: () => <ImageScene src={laneDuskImg} alt="Lane Dusk" />,
-    field: () => <ImageScene src={bridgeImg} alt="Field" />,
+    field: () => <ImageScene src={fieldImg} alt="Field" />,
     bridge: () => <ImageScene src={bridgeImg} alt="Bridge" />,
     school_bus: () => <ImageScene src={schoolBusImg} alt="School Bus" />,
     temple: () => <ImageScene src={templeImg} alt="Temple" />,
@@ -32,6 +35,8 @@ export const SCENE_MAP = {
     badminton_quiet: () => <ImageScene src={badmintonEmptyImg} alt="Empty Badminton Court" />,
     car: () => <ImageScene src={carImg} alt="Inside Car" />,
     rooftop: () => <ImageScene src={rooftopImg} alt="Rooftop" />,
+    rooftop_golden: () => <ImageScene src={rooftopGolden} alt="Rooftop Golden" />,
+    rooftop_twilight: () => <ImageScene src={rooftopTwilight} alt="Rooftop Twilight" />,
     junction: () => <ImageScene src={bridgeImg} alt="Junction" />, // Fallback
 };
 

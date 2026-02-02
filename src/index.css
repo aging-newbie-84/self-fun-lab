@@ -7,6 +7,12 @@
 @layer base {
   body {
     @apply bg-neutral-bg text-neutral-text font-body overflow-hidden selection:bg-accent-yellow;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -104,6 +110,28 @@
 
 .h-dvh {
   height: 100dvh;
+}
+
+/* iOS Safe Area Utilities */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.px-safe {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+.mt-safe {
+  margin-top: env(safe-area-inset-top);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
 }
 
 /* Cinematic Noise Texture */
@@ -204,4 +232,152 @@
 
 .animate-fade-in {
   animation: fadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* --- Ambient Animations (Living Painting) --- */
+
+@keyframes smoke-float {
+  0% {
+    transform: translate(0, 0) scale(1) opacity(0.3);
+  }
+
+  50% {
+    transform: translate(10%, -10%) scale(1.1) opacity(0.6);
+  }
+
+  100% {
+    transform: translate(25%, -25%) scale(1.2) opacity(0);
+  }
+}
+
+.animate-smoke {
+  animation: smoke-float 15s linear infinite;
+  filter: blur(40px);
+}
+
+@keyframes candle-flicker {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+    filter: blur(4px);
+  }
+
+  25% {
+    transform: scale(1.02, 0.98);
+    opacity: 0.7;
+    filter: blur(3px);
+  }
+
+  50% {
+    transform: scale(0.98, 1.05);
+    opacity: 0.9;
+    filter: blur(5px);
+  }
+
+  75% {
+    transform: scale(1.05, 0.95);
+    opacity: 0.6;
+    filter: blur(4px);
+  }
+}
+
+.animate-candle {
+  animation: candle-flicker 0.2s infinite;
+}
+
+@keyframes pulse-vibe {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-vibe {
+  animation: pulse-vibe 10s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+/* --- Animation Intensity Modifiers --- */
+
+.intensity-high {
+  --anim-speed: 0.5;
+  /* multipliers */
+  --anim-scale: 1.2;
+  --anim-opacity: 1.2;
+}
+
+.intensity-medium {
+  --anim-speed: 1.0;
+  --anim-scale: 1.0;
+  --anim-opacity: 1.0;
+}
+
+.intensity-subtle {
+  --anim-speed: 2.0;
+  --anim-scale: 0.8;
+  --anim-opacity: 0.6;
+}
+
+.intensity-high .animate-smoke {
+  animation-duration: 8s;
+  opacity: 0.8;
+}
+
+.intensity-subtle .animate-smoke {
+  animation-duration: 30s;
+  opacity: 0.3;
+}
+
+.intensity-high .animate-candle {
+  animation-duration: 0.1s;
+}
+
+.intensity-subtle .animate-candle {
+  animation-duration: 0.5s;
+  opacity: 0.4;
+}
+
+.intensity-high .animate-pulse-vibe {
+  animation-duration: 5s;
+}
+
+.intensity-subtle .animate-pulse-vibe {
+  animation-duration: 20s;
+}
+
+/* --- Dragging Utilities --- */
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grab:active {
+  cursor: grabbing;
+}
+
+.cursor-grabbing {
+  cursor: grabbing !important;
 }

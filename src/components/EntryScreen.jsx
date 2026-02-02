@@ -38,13 +38,13 @@ const EntryScreen = ({ onComplete }) => {
                 "relative z-10 text-center px-6 transition-all duration-1000 delay-500",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}>
-                <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight mb-8 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+                <h1 className="font-display text-4xl md:text-7xl lg:text-8xl tracking-tight mb-4 md:mb-8 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] leading-tight px-4">
                     What becomes of you?
                 </h1>
 
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-[1px] bg-white/30 animate-pulse-glow" />
-                    <p className="font-display text-xs md:text-sm tracking-[0.5em] uppercase text-white/50 animate-pulse">
+                    <p className="font-display text-[10px] md:text-sm tracking-[0.5em] uppercase text-white/50 animate-pulse">
                         Tap anywhere to begin
                     </p>
                 </div>
@@ -55,10 +55,10 @@ const EntryScreen = ({ onComplete }) => {
 
             {/* Bottom Credits */}
             <footer className={clsx(
-                "absolute bottom-12 left-0 w-full text-center transition-opacity duration-1000 delay-1000",
+                "absolute bottom-8 md:bottom-12 left-0 w-full text-center transition-opacity duration-1000 delay-1000",
                 isVisible ? "opacity-100" : "opacity-0"
             )}>
-                <p className="text-[10px] tracking-[.8em] font-display uppercase text-white/20">A Quiet Forks Experience</p>
+                <p className="text-[8px] md:text-[10px] tracking-[.8em] font-display uppercase text-white/20 px-4">A Quiet Forks Experience</p>
             </footer>
         </div>
     );

@@ -4,14 +4,19 @@ import OnboardingScreen from './components/OnboardingScreen';
 import ChoiceScreen from './components/ChoiceScreen';
 import ReflectionScreen from './components/ReflectionScreen';
 import BackdropRenderer from './components/BackdropRenderer';
+import ValueTrackerHUD from './components/ValueTrackerHUD';
 import stateTracker from './engines/StateTracker';
 import sequencer from './engines/PresetSequencer';
 import audioEngine from './engines/AudioEngine';
 import { PRESETS } from './config/presets';
+import { Volume2, VolumeX, Sun, Moon } from 'lucide-react';
+import { clsx } from 'clsx';
 
 const App = () => {
   const [phase, setPhase] = useState('entry'); // entry, onboarding, game, reflection
   const [currentPreset, setCurrentPreset] = useState(null);
+  const [darkMode, setDarkMode] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
   // Pick a random starting scene for the entry/onboarding phase
   const initialRandomIndex = Math.floor(Math.random() * PRESETS.length);
@@ -22,9 +27,9 @@ const App = () => {
   const [choicesVisible, setChoicesVisible] = useState(false);
 
   // Initialize Game
-  const startGame = (initialTraits) => {
+  const startGame = async (initialTraits) => {
     // Load first preset
-    const first = sequencer.getNextPreset({ presets: [] }, stateTracker.state.tendencies);
+    const first = await sequencer.getNextPreset({ presets: [] }, stateTracker.state.tendencies);
     setCurrentPreset(first);
     setBackdropState({
       ...first.initialBackdrop,
@@ -102,7 +107,7 @@ const App = () => {
         // Start Fade Out of current screen
         setChoicesVisible(false);
 
-        setTimeout(() => {
+        setTimeout(async () => {
           // CHECK SESSION LENGTH
           if (history.length >= SESSION_LENGTH) {
             setPhase('reflection');
@@ -110,7 +115,7 @@ const App = () => {
             return;
           }
 
-          const next = sequencer.getNextPreset(stateTracker.state.history, stateTracker.state.tendencies);
+          const next = await sequencer.getNextPreset(stateTracker.state.history, stateTracker.state.tendencies);
           if (next) {
             // Update Background and Preset
             setBackdropState(prev => ({
@@ -139,10 +144,65 @@ const App = () => {
     startGame();
   };
 
+  const toggleVolume = () => {
+    const newMuted = audioEngine.toggleMute();
+    setIsMuted(newMuted);
+  };
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="relative w-full h-[100dvh] overflow-hidden bg-neutral-bg select-none">
+    <div className={clsx(
+      "relative w-full h-dvh overflow-hidden select-none transition-colors duration-1000",
+      darkMode ? "bg-black text-white" : "bg-neutral-bg text-neutral-text"
+    )}>
       {/* Background Layer */}
-      <BackdropRenderer state={backdropState} />
+      <div className={clsx(
+        "absolute inset-0 transition-opacity duration-1000",
+        (() => {
+          const t = stateTracker.getTendencies();
+          const maxVal = Math.max(...Object.values(t));
+          if (maxVal > 0.75) return "intensity-high";
+          if (maxVal > 0.45) return "intensity-medium";
+          return "intensity-subtle";
+        })()
+      )}>
+        <BackdropRenderer state={backdropState} />
+      </div>
+
+      {/* Real-time HUD Layer (Draggable) */}
+      <ValueTrackerHUD
+        tendencies={stateTracker.state.tendencies}
+        visible={phase === 'game' && choicesVisible}
+      />
+
+      {/* Global Controls */}
+      <div className="fixed top-0 right-0 z-[100] flex gap-3 p-6 pt-safe pr-safe">
+        <button
+          onClick={toggleVolume}
+          className="p-3 rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 text-white/70 hover:text-white transition-all active:scale-95"
+          title={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? (
+            <VolumeX size={18} strokeWidth={2} />
+          ) : (
+            <Volume2 size={18} strokeWidth={2} />
+          )}
+        </button>
+        <button
+          onClick={toggleTheme}
+          className="p-3 rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-md border border-white/10 text-white/70 hover:text-white transition-all active:scale-95"
+          title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {darkMode ? (
+            <Sun size={18} strokeWidth={2} />
+          ) : (
+            <Moon size={18} strokeWidth={2} />
+          )}
+        </button>
+      </div>
 
       {/* UI Layers */}
       {phase === 'entry' && (

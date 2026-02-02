@@ -169,7 +169,7 @@ const App = () => {
           return "intensity-subtle";
         })()
       )}>
-        <BackdropRenderer state={backdropState} />
+        <BackdropRenderer state={{ ...backdropState, tendencies: stateTracker.state.tendencies }} />
       </div>
 
       {/* Real-time HUD Layer (Draggable) */}

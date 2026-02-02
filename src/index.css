@@ -381,3 +381,227 @@
 .cursor-grabbing {
   cursor: grabbing !important;
 }
+
+/* --- Living World: Micro-Animations --- */
+
+/* 1. Water Surface Ripple */
+@keyframes water-ripple {
+
+  0%,
+  100% {
+    transform: scale(1, 1) skew(0deg);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.02, 0.98) skew(1deg);
+    filter: brightness(1.1);
+  }
+}
+
+.animate-water {
+  animation: water-ripple 8s ease-in-out infinite;
+}
+
+/* 2. Fabric/Flag Flutter */
+@keyframes flag-flutter {
+  0% {
+    transform: skewX(0deg) rotate(0deg);
+  }
+
+  25% {
+    transform: skewX(2deg) rotate(0.5deg);
+  }
+
+  75% {
+    transform: skewX(-1deg) rotate(-0.5deg);
+  }
+
+  100% {
+    transform: skewX(0deg) rotate(0deg);
+  }
+}
+
+.animate-flag {
+  animation: flag-flutter 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+/* 3. Passing Vehicle (Light Trail) */
+@keyframes vehicle-trail {
+  0% {
+    transform: translateX(-150vw);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.6;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateX(150vw);
+    opacity: 0;
+  }
+}
+
+.animate-vehicle {
+  animation: vehicle-trail 6s linear infinite;
+}
+
+/* 4. Screen Glow */
+@keyframes screen-glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    filter: saturate(1.2) brightness(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    filter: saturate(1.5) brightness(1.2);
+  }
+}
+
+.animate-screen {
+  animation: screen-glow 3s ease-in-out infinite;
+}
+
+/* 5. Heat Shimmer */
+@keyframes heat-shimmer {
+  0% {
+    transform: translateY(0) skewX(0);
+  }
+
+  25% {
+    transform: translateY(-1px) skewX(0.5deg);
+  }
+
+  50% {
+    transform: translateY(0) skewX(0);
+  }
+
+  75% {
+    transform: translateY(1px) skewX(-0.5deg);
+  }
+
+  100% {
+    transform: translateY(0) skewX(0);
+  }
+}
+
+.animate-heat {
+  animation: heat-shimmer 0.5s linear infinite;
+}
+
+/* 6. Distant Bird Transit */
+@keyframes bird-transit {
+  0% {
+    transform: translateX(-20vw) translateY(0);
+  }
+
+  50% {
+    transform: translateX(50vw) translateY(-10px);
+  }
+
+  100% {
+    transform: translateX(120vw) translateY(0);
+  }
+}
+
+.animate-birds {
+  animation: bird-transit 45s linear infinite;
+}
+
+/* 7. Power Flicker */
+@keyframes power-flicker {
+
+  0%,
+  90%,
+  95%,
+  100% {
+    opacity: 1;
+  }
+
+  92%,
+  94% {
+    opacity: 0.8;
+  }
+}
+
+.animate-power-flicker {
+  animation: power-flicker 12s infinite;
+}
+
+/* 8. Window Life */
+@keyframes window-flicker {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-window {
+  animation: window-flicker 10s ease-in-out infinite;
+}
+
+/* 9. Silhouette Sway */
+@keyframes silhouette-sway {
+
+  0%,
+  100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+
+  50% {
+    transform: rotate(0.5deg) skewX(1deg);
+  }
+}
+
+.animate-sway {
+  animation: silhouette-sway 6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* 10. Ambient Light Sweep */
+@keyframes light-sweep {
+
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+
+  50% {
+    filter: brightness(1.1) saturate(1.1);
+  }
+}
+
+.animate-sweep {
+  animation: light-sweep 10s ease-in-out infinite;
+}
+
+/* 11. Subtle Shadow Shift */
+@keyframes shadow-shift {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+  }
+
+  50% {
+    filter: drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.4));
+  }
+}
+
+.animate-shadow {
+  animation: shadow-shift 12s ease-in-out infinite;
+}

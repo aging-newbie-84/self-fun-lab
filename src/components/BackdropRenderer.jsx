@@ -55,7 +55,8 @@ const BackdropRenderer = ({ state }) => {
         clarity = 1.0,
         particleSpeed = 'medium',
         particleDirection = 'up',
-        animationType: explicitAnimationType
+        animationType: explicitAnimationType,
+        tendencies = {} // Pass tendencies for reactive animations
     } = state || {};
 
     const SceneComponent = SCENE_MAP[sceneId] || SCENE_MAP['lane'];
@@ -69,6 +70,15 @@ const BackdropRenderer = ({ state }) => {
         if (sceneId?.includes('lane')) return 'smoke';
         return 'none';
     })();
+
+    // 1. Identify "Living World" layers to activate
+    const isOutdoor = !['bedroom', 'school_bus'].includes(sceneId);
+    const hasWater = ['bridge', 'field'].includes(sceneId);
+    const hasFabric = ['rooftop', 'temple'].includes(sceneId);
+    const hasVehicles = ['lane', 'bridge', 'school_bus'].includes(sceneId);
+    const isHot = colorTemperature < 0.6 && colorTemperature > 0.3 && isOutdoor;
+    const hasPlants = ['field', 'lane', 'temple'].includes(sceneId);
+    const isUrban = ['lane', 'rooftop'].includes(sceneId);
 
     // Dynamic Atmosphere Colors
     const morning = { top: '#E8D7C3', bottom: '#D4A574', accent: '#FFD700' };
@@ -93,6 +103,13 @@ const BackdropRenderer = ({ state }) => {
                 }}
             />
 
+            {/* Living World: Bird Transit (Deep Background) */}
+            {isOutdoor && tendencies.expansion > 0.6 && (
+                <div className="absolute top-[10%] left-0 w-full h-10 pointer-events-none z-[2] opacity-30">
+                    <div className="animate-birds text-black text-[10px]">vvv</div>
+                </div>
+            )}
+
             {/* 2. Scene Layer with depth scaling */}
             <div
                 className="absolute inset-0 w-full h-full transition-all duration-[2000ms] cubic-bezier(0.4, 0, 0.2, 1) origin-center"
@@ -102,10 +119,27 @@ const BackdropRenderer = ({ state }) => {
                     opacity: 0.9
                 }}
             >
-                <div className="w-full h-full flex items-center justify-center">
+                <div className={clsx(
+                    "w-full h-full flex items-center justify-center transition-all duration-1000",
+                    hasWater && "animate-water",
+                    hasFabric && "animate-flag",
+                    isHot && tendencies.stillness > 0.7 && "animate-heat",
+                    hasPlants && "animate-sway",
+                    ['field', 'rooftop', 'bridge'].includes(sceneId) && "animate-sweep",
+                    ['lane', 'temple', 'school_bus'].includes(sceneId) && "animate-shadow"
+                )}>
                     <SceneComponent />
                 </div>
             </div>
+
+            {/* Living World: Window Life (Urban background) */}
+            {isUrban && (
+                <div className="absolute inset-0 pointer-events-none z-[3] mix-blend-screen opacity-40">
+                    {/* Simulated distant window flickers */}
+                    <div className="absolute top-[40%] right-[20%] w-1 h-1 bg-yellow-200 animate-window" />
+                    <div className="absolute top-[45%] left-[30%] w-2 h-1 bg-yellow-100 animate-window" style={{ animationDelay: '-3s' }} />
+                </div>
+            )}
 
             {/* 3. Ambient Animation Layers (The Living Painting) */}
             {animationType === 'smoke' && (
@@ -125,6 +159,21 @@ const BackdropRenderer = ({ state }) => {
             {animationType === 'pulse' && (
                 <div className="absolute inset-0 pointer-events-none z-[20] mix-blend-color-dodge">
                     <div className="absolute inset-0 bg-white/5 animate-pulse-vibe" />
+                </div>
+            )}
+
+            {/* Living World: Passing Vehicles */}
+            {hasVehicles && (
+                <div className="absolute bottom-[20%] w-full h-px pointer-events-none z-[22]">
+                    <div className="w-64 h-2 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-vehicle" />
+                    <div className="w-48 h-1 bg-gradient-to-r from-transparent via-red-500/10 to-transparent animate-vehicle" style={{ animationDelay: '-10s', animationDuration: '8s' }} />
+                </div>
+            )}
+
+            {/* Living World: Screen Glow */}
+            {sceneId === 'bedroom' && (
+                <div className="absolute inset-0 pointer-events-none z-[23] mix-blend-screen">
+                    <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500/5 animate-screen" />
                 </div>
             )}
 
@@ -151,7 +200,10 @@ const BackdropRenderer = ({ state }) => {
             {/* Character Silhouette Layer */}
             <div className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10">
                 <div
-                    className="w-[280px] h-[450px] opacity-20 filter blur-[2px] animate-pulse-gentle transition-all duration-1000"
+                    className={clsx(
+                        "w-[280px] h-[450px] opacity-20 filter blur-[2px] transition-all duration-1000",
+                        tendencies.momentum > 0.6 ? "animate-pulse" : "animate-pulse-gentle"
+                    )}
                     style={{
                         background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
                         maskImage: 'radial-gradient(ellipse at bottom, black 40%, transparent 70%)',
@@ -184,9 +236,14 @@ const BackdropRenderer = ({ state }) => {
                 depth="front"
             />
 
-            {/* Cinematic Vignette & Grain */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-black/40 opacity-50" />
-            <div className="absolute inset-0 pointer-events-none bg-noise opacity-[0.02]" />
+            {/* Cinematic Vignette, Grain & Power Flicker */}
+            <div className={clsx(
+                "absolute inset-0 pointer-events-none transition-opacity duration-1000",
+                tendencies.mystery > 0.7 && "animate-power-flicker"
+            )}>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 opacity-50" />
+                <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+            </div>
         </div>
     );
 };
